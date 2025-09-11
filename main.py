@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect, url_for
+from flask import Flask, request, render_template, session, redirect, url_for, flash
 import requests
 from threading import Thread, Event
 import time
@@ -150,6 +150,24 @@ def stop_task(username, task_id):
         if task_id in stop_events:
             stop_events[task_id].set()
         user_tasks.pop(task_id)
+
+    return redirect(url_for("my_tasks"))
+
+
+# ----------------- Stop Task Manual -----------------
+@app.route("/stop_task_manual", methods=["POST"])
+def stop_task_manual():
+    username = session.get("username", get_user_id())
+    task_id = request.form.get("task_id")
+
+    user_tasks = running_tasks.get(username, {})
+    if task_id in user_tasks:
+        if task_id in stop_events:
+            stop_events[task_id].set()
+        user_tasks.pop(task_id)
+        flash(f"✅ Task {task_id} stopped successfully!")
+    else:
+        flash(f"❌ Task ID {task_id} not found.")
 
     return redirect(url_for("my_tasks"))
 
