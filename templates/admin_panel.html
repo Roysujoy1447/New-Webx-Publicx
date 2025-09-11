@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin Panel - Secure Messenger</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    *{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+    .gradient-bg{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);}
+    .glass{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);}
+    .floaty{animation:floaty 8s ease-in-out infinite;}
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  </style>
+</head>
+<body class="min-h-screen gradient-bg text-white">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <header class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white text-purple-600 shadow-xl mb-4 floaty">
+        <i class="fa-solid fa-user-shield text-3xl"></i>
+      </div>
+      <h1 class="text-4xl font-bold">Admin Control Panel</h1>
+      <p class="text-blue-100 mt-2">Manage user approvals and access</p>
+      <div class="mt-4 space-x-4">
+        <a href="/" class="text-blue-200 hover:text-white">
+          <i class="fa-solid fa-home mr-1"></i> Go to App
+        </a>
+        <a href="/admin/tasks" class="text-yellow-200 hover:text-white">
+          <i class="fa-solid fa-list-check mr-1"></i> View Running Tasks
+        </a>
+        <a href="/admin/logout" class="text-red-300 hover:text-red-100">
+          <i class="fa-solid fa-sign-out-alt mr-1"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Pending Requests -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-semibold mb-6 flex items-center">
+          <i class="fa-solid fa-clock text-yellow-400 mr-3"></i>
+          Pending Requests ({{ pending_requests|length }})
+        </h2>
+        {% if pending_requests %}
+          <div class="space-y-4">
+            {% for user in pending_requests %}
+            <div class="glass rounded-xl p-4 border border-white/10">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium">{{ user }}</p>
+                  <p class="text-sm text-blue-200">Requesting access</p>
+                </div>
+                <div class="space-x-2">
+                  <a href="/admin/approve/{{ user }}" 
+                     class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm transition">
+                    <i class="fa-solid fa-check mr-1"></i> Approve
+                  </a>
+                  <a href="/admin/reject/{{ user }}" 
+                     class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition">
+                    <i class="fa-solid fa-times mr-1"></i> Reject
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center py-8 text-blue-200">
+            <i class="fa-solid fa-inbox text-4xl mb-4"></i>
+            <p>No pending requests</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Approved Users -->
+      <div class="glass rounded-2xl p-8 shadow-xl">
+        <h2 class="text-2xl font-semibold mb-6 flex items-center">
+          <i class="fa-solid fa-check-circle text-green-400 mr-3"></i>
+          Approved Users ({{ approved_users|length }})
+        </h2>
+        {% if approved_users %}
+          <div class="space-y-4">
+            {% for user in approved_users %}
+            <div class="glass rounded-xl p-4 border border-white/10">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-medium">{{ user }}</p>
+                  <p class="text-sm text-green-200">Has access</p>
+                </div>
+                <div>
+                  <a href="/admin/remove/{{ user }}" 
+                     class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition">
+                    <i class="fa-solid fa-user-times mr-1"></i> Remove Access
+                  </a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="text-center py-8 text-blue-200">
+            <i class="fa-solid fa-users text-4xl mb-4"></i>
+            <p>No approved users yet</p>
+          </div>
+        {% endif %}
+      </div>
+    </main>
+  </div>
+</body>
+  </html>
