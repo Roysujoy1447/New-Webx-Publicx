@@ -34,7 +34,7 @@
       {% if tasks %}
         <div class="space-y-4">
           {% for task_id, task in tasks.items() %}
-          <div class="glass rounded-xl p-6 border border-white/10 flex items-center justify-between animate-pulse hover:animate-none transition">
+          <div class="glass rounded-xl p-6 border border-white/10 flex items-center justify-between">
             <div>
               <p class="font-semibold">Task ID: {{ task_id }}</p>
               <p class="text-sm text-blue-200">Type: {{ task.type }} | Status: {{ task.status }}</p>
@@ -53,27 +53,16 @@
         </div>
       {% endif %}
 
-      <!-- Manual Stop Task Section -->
-      <div class="mt-12 glass rounded-xl p-6 border border-white/10">
-        <h2 class="text-xl font-bold mb-4 flex items-center">
-          <i class="fa-solid fa-hand-stop mr-2 text-red-400 animate-bounce"></i>
-          Stop Task by ID
-        </h2>
-        <form action="/stop_task_manual" method="post" class="flex gap-4">
+      <!-- Manual Stop Task -->
+      <div class="glass rounded-xl p-6 border border-white/10 mt-8">
+        <h2 class="text-lg font-semibold mb-4">Stop Task by ID</h2>
+        <form method="POST" action="/stop_task_manual" class="flex items-center gap-4">
           <input type="text" name="task_id" placeholder="Enter Task ID" 
-                 class="flex-1 px-4 py-2 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-red-400" required>
-          <button type="submit" 
-                  class="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg shadow-lg transition font-semibold">
+                 class="flex-1 px-4 py-2 rounded-lg text-black" required>
+          <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition">
             <i class="fa-solid fa-stop mr-1"></i> Stop
           </button>
         </form>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <div class="mt-4 text-green-300 font-semibold animate-pulse">
-              {{ messages[0] }}
-            </div>
-          {% endif %}
-        {% endwith %}
       </div>
     </main>
   </div>
