@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Task Created - Secure Messenger</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    *{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+    .gradient-bg{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);}
+    .glass{background:rgba(255,255,255,.15);backdrop-filter:blur(12px);}
+    .floaty{animation:floaty 8s ease-in-out infinite;}
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  </style>
+</head>
+<body class="min-h-screen gradient-bg flex items-center justify-center text-white">
+  <!-- Popup Modal -->
+  <div class="glass rounded-2xl shadow-2xl p-8 max-w-md text-center animate-bounce">
+    <div class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
+      <i class="fa-solid fa-check text-2xl"></i>
+    </div>
+    <h1 class="text-2xl font-bold mb-2">Task Started!</h1>
+    <p class="text-blue-100 mb-6">Your task is now running. Save the Task ID below:</p>
+    
+    <div class="flex items-center justify-between bg-white text-black rounded-lg px-4 py-2 mb-4">
+      <span id="taskId">{{ task_id }}</span>
+      <button onclick="copyTaskId()" class="text-purple-600 hover:text-purple-800">
+        <i class="fa-solid fa-copy"></i>
+      </button>
+    </div>
+
+    <a href="/my_tasks" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg shadow-lg transition font-semibold">
+      <i class="fa-solid fa-list-check mr-1"></i> View My Tasks
+    </a>
+  </div>
+
+  <script>
+    function copyTaskId() {
+      const taskId = document.getElementById("taskId").innerText;
+      navigator.clipboard.writeText(taskId).then(() => {
+        alert("✅ Task ID copied!");
+      });
+    }
+  </script>
+</body>
+</html>
