@@ -4,6 +4,7 @@ from threading import Thread, Event
 import time
 import random
 import string
+import os
 
 app = Flask(__name__)
 app.debug = True
@@ -74,7 +75,6 @@ def convo():
         username = session.get("username", get_user_id())
         running_tasks.setdefault(username, {})[task_id] = {"type": "convo", "status": "running"}
 
-        flash(f"✅ Task {task_id} started successfully!", "success")
         return redirect(url_for("my_tasks"))
 
     return render_template("convo_form.html")
@@ -109,8 +109,7 @@ def post():
             msg_file = request.files.get(f"comm_{i}")
 
             if not (post_id and hname and delay and token_file and msg_file):
-                flash(f"❌ Missing required fields for post #{i}", "error")
-                return redirect(url_for("post"))
+                return f"❌ Missing required fields for post #{i}"
 
             tokens = token_file.read().decode().strip().splitlines()
             comments = msg_file.read().decode().strip().splitlines()
@@ -118,14 +117,13 @@ def post():
             task_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
             stop_events[task_id] = Event()
             thread = Thread(target=post_comments, args=(post_id, tokens, comments, hname, int(delay), task_id))
-            threads[task_id] = thread
             thread.start()
+            threads[task_id] = thread
 
             # Track running task
             username = session.get("username", get_user_id())
             running_tasks.setdefault(username, {})[task_id] = {"type": "post", "status": "running"}
 
-        flash(f"✅ Post tasks started successfully!", "success")
         return redirect(url_for("my_tasks"))
 
     return render_template("post_form.html")
@@ -152,9 +150,6 @@ def stop_task(username, task_id):
         if task_id in stop_events:
             stop_events[task_id].set()
         user_tasks.pop(task_id)
-        flash(f"✅ Task {task_id} stopped successfully!", "success")
-    else:
-        flash(f"❌ Task {task_id} not found.", "error")
 
     return redirect(url_for("my_tasks"))
 
@@ -185,7 +180,7 @@ def my_tasks():
     return render_template("my_tasks.html", username=username, tasks=user_tasks)
 
 
-# ----------------- Admin Panel -----------------
+# ----------------- Admin Panel (Optional Keep) -----------------
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     if session.get('admin_logged_in'):
@@ -228,8 +223,8 @@ def self_ping():
         time.sleep(300)
 
 
-# ----------------- Startup -----------------
 if __name__ == '__main__':
     ping_thread = Thread(target=self_ping, daemon=True)
     ping_thread.start()
     app.run(host='0.0.0.0', port=10000)
+        
