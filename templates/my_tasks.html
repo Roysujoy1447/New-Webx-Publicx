@@ -30,6 +30,20 @@
       </div>
     </header>
 
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-4 space-y-2">
+          {% for category, message in messages %}
+            <div class="p-4 rounded-lg transition
+                        {% if category == 'success' %}bg-green-600 text-white{% else %}bg-red-600 text-white{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <main>
       {% if tasks %}
         <div class="space-y-4">
@@ -40,7 +54,7 @@
               <p class="text-xs sm:text-sm text-blue-200">Type: {{ task.type }} | Status: {{ task.status }}</p>
             </div>
             <a href="/stop_task/{{ username }}/{{ task_id }}" 
-               class="w-full sm:w-auto text-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm sm:text-base transition">
+               class="w-full sm:w-auto text-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm sm:text-base transition mt-2 sm:mt-0">
               <i class="fa-solid fa-stop mr-1"></i> Stop Task
             </a>
           </div>
