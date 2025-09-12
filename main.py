@@ -165,9 +165,9 @@ def stop_task_manual():
         if task_id in stop_events:
             stop_events[task_id].set()
         user_tasks.pop(task_id)
-        flash(f"✅ Task {task_id} stopped successfully!")
+        flash(f"✅ Task {task_id} stopped successfully!", "success")
     else:
-        flash(f"❌ Task ID {task_id} not found.")
+        flash(f"❌ Task ID {task_id} not found.", "error")
 
     return redirect(url_for("my_tasks"))
 
