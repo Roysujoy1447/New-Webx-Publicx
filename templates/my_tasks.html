@@ -16,15 +16,15 @@
   </style>
 </head>
 <body class="min-h-screen gradient-bg text-white">
-  <div class="max-w-5xl mx-auto px-6 py-12">
+  <div class="max-w-5xl w-full mx-auto px-4 sm:px-6 py-12">
     <header class="text-center mb-12">
-      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white text-purple-600 shadow-xl mb-4 floaty">
-        <i class="fa-solid fa-list-check text-3xl"></i>
+      <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white text-purple-600 shadow-xl mb-4 floaty mx-auto">
+        <i class="fa-solid fa-list-check text-2xl sm:text-3xl"></i>
       </div>
-      <h1 class="text-4xl font-bold">My Running Tasks</h1>
-      <p class="text-blue-100 mt-2">Hello, {{ username }} 👋</p>
-      <div class="mt-4 space-x-4">
-        <a href="/" class="text-blue-200 hover:text-white">
+      <h1 class="text-3xl sm:text-4xl font-bold">My Running Tasks</h1>
+      <p class="text-blue-100 mt-2 text-sm sm:text-base">Hello, {{ username }} 👋</p>
+      <div class="mt-4 space-x-2 sm:space-x-4">
+        <a href="/" class="text-blue-200 hover:text-white text-sm sm:text-base inline-flex items-center justify-center">
           <i class="fa-solid fa-home mr-1"></i> Go to Home
         </a>
       </div>
@@ -34,13 +34,13 @@
       {% if tasks %}
         <div class="space-y-4">
           {% for task_id, task in tasks.items() %}
-          <div class="glass rounded-xl p-6 border border-white/10 flex items-center justify-between">
-            <div>
-              <p class="font-semibold">Task ID: {{ task_id }}</p>
-              <p class="text-sm text-blue-200">Type: {{ task.type }} | Status: {{ task.status }}</p>
+          <div class="glass rounded-xl p-4 sm:p-6 border border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div class="mb-2 sm:mb-0">
+              <p class="font-semibold text-sm sm:text-base">Task ID: {{ task_id }}</p>
+              <p class="text-xs sm:text-sm text-blue-200">Type: {{ task.type }} | Status: {{ task.status }}</p>
             </div>
             <a href="/stop_task/{{ username }}/{{ task_id }}" 
-               class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition">
+               class="w-full sm:w-auto text-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm sm:text-base transition">
               <i class="fa-solid fa-stop mr-1"></i> Stop Task
             </a>
           </div>
@@ -48,18 +48,18 @@
         </div>
       {% else %}
         <div class="text-center py-12 text-blue-200">
-          <i class="fa-solid fa-circle-check text-5xl mb-4"></i>
-          <p>No running tasks right now.</p>
+          <i class="fa-solid fa-circle-check text-4xl sm:text-5xl mb-4"></i>
+          <p class="text-sm sm:text-base">No running tasks right now.</p>
         </div>
       {% endif %}
 
       <!-- Manual Stop Task -->
-      <div class="glass rounded-xl p-6 border border-white/10 mt-8">
-        <h2 class="text-lg font-semibold mb-4">Stop Task by ID</h2>
-        <form method="POST" action="/stop_task_manual" class="flex items-center gap-4">
+      <div class="glass rounded-xl p-4 sm:p-6 border border-white/10 mt-8">
+        <h2 class="text-lg sm:text-xl font-semibold mb-4 text-center sm:text-left">Stop Task by ID</h2>
+        <form method="POST" action="/stop_task_manual" class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
           <input type="text" name="task_id" placeholder="Enter Task ID" 
-                 class="flex-1 px-4 py-2 rounded-lg text-black" required>
-          <button type="submit" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition">
+                 class="flex-1 px-4 py-2 rounded-lg text-black w-full sm:w-auto" required>
+          <button type="submit" class="px-4 py-2 w-full sm:w-auto bg-red-600 hover:bg-red-700 rounded-lg text-sm sm:text-base transition">
             <i class="fa-solid fa-stop mr-1"></i> Stop
           </button>
         </form>
