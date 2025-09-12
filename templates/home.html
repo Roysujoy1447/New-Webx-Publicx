@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Base */
         body {
             font-family: "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            /* External background image - raw GitHub URL */
             background: url('https://raw.githubusercontent.com/Legend-Xaryab/New-Webx-Publicx/23787e9a8c62d89b00fb1c965960eb87926880dc/templates/4b01116cd700ed71bceda81c6aca8053.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
@@ -29,7 +29,6 @@
 
         /* Dark Mode */
         body.dark {
-            /* Keep image, darken for readability */
             background: url('https://raw.githubusercontent.com/Legend-Xaryab/New-Webx-Publicx/23787e9a8c62d89b00fb1c965960eb87926880dc/templates/4b01116cd700ed71bceda81c6aca8053.jpg') no-repeat center center fixed;
             background-size: cover;
             filter: brightness(0.6);
@@ -91,8 +90,8 @@
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
             margin-top: 1rem;
         }
 
@@ -106,6 +105,7 @@
             font-weight: bold;
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
             transition: transform 0.3s, box-shadow 0.3s;
+            word-break: break-word;
         }
         a.button:hover {
             transform: translateY(-5px) scale(1.05);
@@ -130,11 +130,12 @@
         .contact-links {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         .contact-links a {
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #4CAF50;
             transition: 0.3s;
@@ -155,6 +156,40 @@
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            header {
+                font-size: 1.2rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .dark-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            main {
+                margin: 2rem 1rem;
+                padding: 1.5rem;
+            }
+
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+
+            a.button {
+                font-size: 0.95rem;
+                padding: 0.9rem;
+            }
+
+            .contact-card {
+                margin-top: 2rem;
+                padding: 1rem;
+            }
         }
     </style>
 </head>
